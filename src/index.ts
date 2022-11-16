@@ -4,7 +4,6 @@ import { AppDataSource } from "./lib/typeorm";
 
 dotenv.config({ path: "../.env" });
 
-console.log("salut");
 AppDataSource.initialize()
   .then(() => {
     console.log("Data Source has been initialized!");
