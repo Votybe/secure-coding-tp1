@@ -3,13 +3,15 @@ import * as dotenv from "dotenv";
 
 dotenv.config();
 
+console.log(typeof process.env.PORT);
 console.log(process.env.PORT);
 
 export const AppDataSource = new DataSource({
   type: "postgres",
-  host: "localhost",
+  host: process.env.HOST,
   port: 5433,
-  username: "tutorial",
-  password: "privatepassword",
-  database: "iam",
+  username: process.env.USERNAME,
+  password: process.env.PASSWORD,
+  database: process.env.DATABASE,
+  entities: ["entity/*.ts"],
 });
