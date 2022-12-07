@@ -8,14 +8,14 @@
     "watch": "rm -fr dist && tsc -watch",
     "start": "node --async-stack-traces dist/index.js",
     "lint": "eslint --fix src",
-    "test":"NODE_ENV=test mocha --recursive dist/specs --exit --async-stack-traces"
+    "test": "NODE_ENV=test mocha --recursive dist/specs --exit --async-stack-traces"
   },
   "author": "Thomas VEILLARD",
   "license": "ISC",
   "devDependencies": {
     "@types/chai": "^4.3.4",
     "@types/chai-as-promised": "^7.1.5",
-    "@types/mocha": "^10.0.0",
+    "@types/mocha": "^10.0.1",
     "@types/node": "^15.14.9",
     "@typescript-eslint/eslint-plugin": "^5.3.0",
     "@typescript-eslint/parser": "^5.3.0",
