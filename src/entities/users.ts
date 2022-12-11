@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  BeforeInsert,
+  BeforeUpdate,
+} from "typeorm";
 
 @Entity()
 export class User {
@@ -16,4 +22,7 @@ export class User {
 
   @Column()
   "passwordHash": string;
+  @BeforeInsert()
+  @BeforeUpdate()
+  validatePresenceOfProperties() {}
 }
