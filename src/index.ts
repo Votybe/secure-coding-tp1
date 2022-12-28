@@ -1,8 +1,5 @@
 import "reflect-metadata";
-import * as dotenv from "dotenv";
 import { AppDataSource } from "./lib/typeorm";
-
-dotenv.config({ path: "../.env" });
 
 AppDataSource.initialize()
   .then(() => {

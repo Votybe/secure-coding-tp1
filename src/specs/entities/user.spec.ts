@@ -17,7 +17,7 @@ describe("User", function () {
       .catch((error: any) => console.log(error));
   });
 
-  beforeEach(async function () {
+  beforeEach(function () {
     beforeEach(async function () {
       const entities = AppDataSource.entityMetadatas;
 
@@ -29,28 +29,28 @@ describe("User", function () {
     });
   });
 
-  describe("validations", async function () {
+  describe("validations", function () {
     it("should create a new User in database", async () => {
       const user = {
         firstName: "aymeric",
         lastName: "maillot",
-        email: "aymeric.maillot@efrei.net",
+        email: "aymeric",
         passwordHash: "password123456",
       };
 
-      await AppDataSource.getRepository(User).save(user);
+      console.log(user);
 
-      const users = await AppDataSource.getRepository(User).findOne({
-        where: {
-          lastName: user.lastName,
-        },
-      });
-      console.log(users);
+      await AppDataSource.getRepository(User).save(user);
+      // console.log(`user validation : ${users} `);
+
+      // const users = await AppDataSource.getRepository(User).findOne({
+      //   where: {
+      //     lastName: user.lastName,
+      //   },
+      // });
     });
 
     it("should raise error if email is missing", async () => {
-      // hint to check if a promise fails with chai + chai-as-promise:
-
       const repoUser = AppDataSource.getRepository(User);
       const user = {
         firstName: "aymeric",
@@ -58,6 +58,7 @@ describe("User", function () {
         email: undefined,
         passwordHash: "password123456",
       };
+
       const userPromise = repoUser.save(user);
 
       await chai

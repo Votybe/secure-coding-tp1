@@ -1,10 +1,5 @@
-import {
-  Entity,
-  PrimaryGeneratedColumn,
-  Column,
-  BeforeInsert,
-  BeforeUpdate,
-} from "typeorm";
+import { IsEmail } from "class-validator";
+import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
 export class User {
@@ -17,12 +12,10 @@ export class User {
   @Column()
   "lastName": string;
 
-  @Column()
+  @Column({ nullable: false, unique: true })
+  @IsEmail({}, { message: "inccorect email" })
   "email": string;
 
   @Column()
   "passwordHash": string;
-  @BeforeInsert()
-  @BeforeUpdate()
-  validatePresenceOfProperties() {}
 }
