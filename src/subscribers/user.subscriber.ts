@@ -19,19 +19,19 @@ export class UserSubscriber implements EntitySubscriberInterface<User> {
   /**
    * Called before post insertion.
    */
-
+  
   async beforeInsert(event: InsertEvent<User>) {
-    const user = event.entity;
 
-    console.log(await validate(user));
+    const user = new User();
+    user.firstName = event.entity.firstName;
+    user.lastName = event.entity.lastName;
+    user.email = event.entity.email;
+    user.passwordHash = event.entity.passwordHash;
     console.log(user);
-
     console.log(`BEFORE POST INSERTED: `);
-
     const errors = await validate(user);
+
     if (errors.length > 0) {
-      console.log(user);
-      console.log("BEFORE POST INSERTED");
       throw new Error("Validation failed !");
     }
   }

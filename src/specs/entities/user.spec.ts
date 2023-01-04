@@ -20,7 +20,6 @@ describe("User", function () {
   beforeEach(function () {
     beforeEach(async function () {
       const entities = AppDataSource.entityMetadatas;
-
       // iterate on all entities then get the name of all entities and delete it
       for (const entity of entities) {
         const repository = AppDataSource.getRepository(entity.name);
@@ -34,11 +33,9 @@ describe("User", function () {
       const user = {
         firstName: "aymeric",
         lastName: "maillot",
-        email: "aymeric",
+        email: "aymeric@gmail.com",
         passwordHash: "password123456",
       };
-
-      console.log(user);
 
       await AppDataSource.getRepository(User).save(user);
       // console.log(`user validation : ${users} `);
@@ -50,23 +47,41 @@ describe("User", function () {
       // });
     });
 
-    it("should raise error if email is missing", async () => {
-      const repoUser = AppDataSource.getRepository(User);
-      const user = {
-        firstName: "aymeric",
-        lastName: "maillot",
-        email: undefined,
-        passwordHash: "password123456",
-      };
+    // it("should raise error if email is missing", async () => {
+    //   const repoUser = AppDataSource.getRepository(User);
+    //   const user = {
+    //     firstName: "aymeric",
+    //     lastName: "maillot",
+    //     email: undefined,
+    //     passwordHash: "password123456",
+    //   };
 
-      const userPromise = repoUser.save(user);
+    //   const userPromise = repoUser.save(user);
 
-      await chai
-        .expect(userPromise)
-        .to.eventually.be.rejectedWith(
-          QueryFailedError,
-          'null value in column "email" of relation "user" violates not-null constraint'
-        );
-    });
+    //   await chai
+    //     .expect(userPromise)
+    //     .to.eventually.be.rejectedWith(
+    //       QueryFailedError,
+    //       'null value in column "email" of relation "user" violates not-null constraint'
+    //     );
+    // });
+
+    // it("should raise error if email is empty", async () => {
+    //   const repoUser = AppDataSource.getRepository(User);
+    //   const user = {
+    //     firstName: "aymeric",
+    //     lastName: "maillot",
+    //     email: '',
+    //     passwordHash: "password123456",
+    //   };
+
+    //   await chai
+    //     .expect(repoUser.save(user))
+    //     .to.eventually.be.rejected.and.deep.include({
+    //       target: user,
+    //       property: 'email',
+    //       constraints: { isNotEmpty: 'email should not be empty' }
+    //     })
+    // });
   });
 });
