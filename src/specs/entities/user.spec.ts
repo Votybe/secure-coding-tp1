@@ -31,9 +31,9 @@ describe("User", function () {
   describe("validations", function () {
     it("should create a new User in database", async () => {
       const user = {
-        firstName: "aymeric",
-        lastName: "maillot",
-        email: "aymeric@gmail.com",
+        firstName: "test",
+        lastName: "test",
+        email: "aymeric",
         passwordHash: "password123456",
       };
 

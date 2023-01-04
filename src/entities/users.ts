@@ -12,7 +12,7 @@ export class User {
   @Column()
   "lastName": string;
 
-  @Column({ nullable: false, unique: true })
+  @Column({ nullable: false })
   @IsEmail({}, { message: "inccorect email" })
   "email": string;
 
