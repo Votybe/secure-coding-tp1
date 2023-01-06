@@ -31,57 +31,71 @@ describe("User", function () {
   describe("validations", function () {
     it("should create a new User in database", async () => {
       const user = {
-        firstName: "test",
-        lastName: "test",
-        email: "aymeric",
+        firstName: "aymeric",
+        lastName: "maillot",
+        email: "ayMeric@gmail.com",
         passwordHash: "password123456",
       };
-
       await AppDataSource.getRepository(User).save(user);
-      // console.log(`user validation : ${users} `);
-
-      // const users = await AppDataSource.getRepository(User).findOne({
-      //   where: {
-      //     lastName: user.lastName,
-      //   },
-      // });
     });
 
-    // it("should raise error if email is missing", async () => {
-    //   const repoUser = AppDataSource.getRepository(User);
-    //   const user = {
-    //     firstName: "aymeric",
-    //     lastName: "maillot",
-    //     email: undefined,
-    //     passwordHash: "password123456",
-    //   };
+    it("should raise error if email is missing", async () => {
+      const user = new User();
+      user.firstName= "aymeric";
+      user.lastName= "maillot";
+      user.passwordHash= "password123456";
+      const userPromise = AppDataSource.getRepository(User).save(user);
 
-    //   const userPromise = repoUser.save(user);
+      await chai
+        .expect(userPromise)
+        .to.eventually.be.rejected.and.deep.include({
+          target: user,
+          property: 'email',
+          constraints: {
+            isNotEmpty: 'email should not be empty',
+            isEmail: 'incorrect email'
+          }
+        })
+    });
 
-    //   await chai
-    //     .expect(userPromise)
-    //     .to.eventually.be.rejectedWith(
-    //       QueryFailedError,
-    //       'null value in column "email" of relation "user" violates not-null constraint'
-    //     );
-    // });
+    it("should raise error if email has not email format", async () => {
+      const user = new User();
+      user.firstName= "aymeric";
+      user.lastName= "maillot";
+      user.email= "ayMeric",
+      user.passwordHash= "password123456";
+      const userPromise = AppDataSource.getRepository(User).save(user);
 
-    // it("should raise error if email is empty", async () => {
-    //   const repoUser = AppDataSource.getRepository(User);
-    //   const user = {
-    //     firstName: "aymeric",
-    //     lastName: "maillot",
-    //     email: '',
-    //     passwordHash: "password123456",
-    //   };
+      await chai
+        .expect(userPromise)
+        .to.eventually.be.rejected.and.deep.include({
+          target: user,
+          property: 'email',
+          constraints: {isEmail: 'incorrect email'}
+        })
+    });
 
-    //   await chai
-    //     .expect(repoUser.save(user))
-    //     .to.eventually.be.rejected.and.deep.include({
-    //       target: user,
-    //       property: 'email',
-    //       constraints: { isNotEmpty: 'email should not be empty' }
-    //     })
-    // });
+    it("Should raise error if email is already used", async () => {
+      const repoUser = AppDataSource.getRepository(User);
+      const user1 = new User();
+      user1.firstName= "aymeric";
+      user1.lastName= "maillot";
+      user1.email= "aymeric@gmail.com".toLocaleLowerCase(),
+      user1.passwordHash= "password123456";
+      const user2 = new User();
+      user2.firstName= "aymeric";
+      user2.lastName= "maillot";
+      user2.email= "AyMeRic@gmail.com".toLocaleLowerCase(),
+      user2.passwordHash= "password123456";
+      repoUser.save(user1);
+      const userPromise2 = repoUser.save(user2);
+
+      await chai
+        .expect(userPromise2)
+        .to.eventually.be.rejectedWith(
+          QueryFailedError,
+          'duplicate key value violates unique constraint'
+        );
+    });
   });
 });

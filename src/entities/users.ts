@@ -1,4 +1,4 @@
-import { IsEmail } from "class-validator";
+import { IsEmail, IsNotEmpty } from "class-validator";
 import { Entity, PrimaryGeneratedColumn, Column } from "typeorm";
 
 @Entity()
@@ -12,8 +12,9 @@ export class User {
   @Column()
   "lastName": string;
 
-  @Column({ nullable: false })
-  @IsEmail({}, { message: "inccorect email" })
+  @Column({ nullable: false, unique: true })
+  @IsEmail({}, { message: "incorrect email" })
+  @IsNotEmpty()
   "email": string;
 
   @Column()
