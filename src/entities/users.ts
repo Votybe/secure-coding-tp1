@@ -1,6 +1,6 @@
-import { IsEmail, IsNotEmpty } from "class-validator";
+import { IsEmail, IsNotEmpty, Validate } from "class-validator";
 import { Entity, PrimaryGeneratedColumn, Column, Index } from "typeorm";
-
+import { UniqueInColumn } from "../custom-decorators/unique.in.column"
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -23,6 +23,9 @@ export class User {
   @IsEmail({}, { message: "incorrect email" })
   @IsNotEmpty()
   @Index({ unique: true})
+  @Validate(UniqueInColumn, {
+    message: 'Wrong post title',
+  })
   "email": string;
 
   @Column()
