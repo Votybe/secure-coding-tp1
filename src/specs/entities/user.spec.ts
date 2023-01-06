@@ -33,7 +33,7 @@ describe("User", function () {
       const user = {
         firstName: "aymeric",
         lastName: "maillot",
-        email: "ayMeric@gmail.com",
+        email: "aymeric.maillot@gmail.com",
         passwordHash: "password123456",
       };
       await AppDataSource.getRepository(User).save(user);
@@ -80,12 +80,12 @@ describe("User", function () {
       const user1 = new User();
       user1.firstName= "aymeric";
       user1.lastName= "maillot";
-      user1.email= "aymeric@gmail.com".toLocaleLowerCase(),
+      user1.email= "aymeric@gmail.com",
       user1.passwordHash= "password123456";
       const user2 = new User();
       user2.firstName= "aymeric";
       user2.lastName= "maillot";
-      user2.email= "AyMeRic@gmail.com".toLocaleLowerCase(),
+      user2.email= "AyMeRic@gmail.com",
       user2.passwordHash= "password123456";
       repoUser.save(user1);
       const userPromise2 = repoUser.save(user2);
