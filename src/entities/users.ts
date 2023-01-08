@@ -1,6 +1,9 @@
-import { IsEmail, IsNotEmpty, Validate } from "class-validator";
-import { Entity, PrimaryGeneratedColumn, Column, Index } from "typeorm";
-import { UniqueInColumn } from "../custom-decorators/unique.in.column"
+import { IsEmail, IsNotEmpty, ValidationError } from "class-validator";
+import { Entity, PrimaryGeneratedColumn, Column, Index, Repository } from "typeorm";
+import { UniqueInColumn } from '../custom-decorators/unique.in.column';
+
+const bcrypt = require('bcrypt');
+
 @Entity()
 export class User {
   @PrimaryGeneratedColumn()
@@ -23,11 +26,19 @@ export class User {
   @IsEmail({}, { message: "incorrect email" })
   @IsNotEmpty()
   @Index({ unique: true})
-  @Validate(UniqueInColumn, {
-    message: 'Wrong post title',
-  })
+  //@UniqueInColumn()
   "email": string;
 
   @Column()
   "passwordHash": string;
+
+  async setPassword(password: string, passwordConfirmation: string) {
+    if(password != passwordConfirmation)
+      throw new Error("Both passwords don't match")
+    await bcrypt.genSalt().then(async (salt: any) => {
+      await bcrypt.hash(password, salt).then((hash: string) => {
+          this.passwordHash = hash;
+      });
+    });
+  }
 }
