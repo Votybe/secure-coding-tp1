@@ -90,7 +90,7 @@ describe("User", function () {
       user2.passwordHash= "password123456";
       repoUser.save(user1);
       const userPromise2 = repoUser.save(user2);
-
+      
       await chai
         .expect(userPromise2)
         .to.eventually.be.rejectedWith(
@@ -104,7 +104,7 @@ describe("User", function () {
       user.firstName= "aymeric";
       user.lastName= "maillot";
       user.email= "aymeric@gmail.com";
-      const password1 = "password123456";
+      const password1 = "Password123456";
       const password2 = "password12";
       await user.setPassword(password1, password1)
 
@@ -112,6 +112,21 @@ describe("User", function () {
       await chai
         .expect(userPromise)
         .to.equal(false);
+    });
+
+    it("should match passwords", async () => {
+      const user = new User();
+      user.firstName= "aymeric";
+      user.lastName= "maillot";
+      user.email= "aymeric@gmail.com";
+      const password1 = "password123456";
+
+      await chai
+        .expect(user.setPassword(password1, password1))
+        .to.eventually.be.rejectedWith(
+          Error,
+          'Password is not strong enough'
+        );
     });
 
   });
