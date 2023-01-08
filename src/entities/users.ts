@@ -41,4 +41,10 @@ export class User {
       });
     });
   }
+
+  async isPasswordValid(password: string): Promise<boolean> {
+    const passMatch = await bcrypt.compare(password, this.passwordHash);
+    return passMatch;
+  }
+
 }

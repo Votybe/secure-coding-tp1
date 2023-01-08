@@ -4,6 +4,7 @@ import * as chaiAsPromised from "chai-as-promised";
 import { User } from "../../entities/users";
 import { AppDataSource } from "../../lib/typeorm";
 import { QueryFailedError } from "typeorm";
+import { ValidationError } from "class-validator";
 
 chai.use(chaiAsPromised);
 
@@ -97,5 +98,21 @@ describe("User", function () {
           'duplicate key value violates unique constraint'
         );
     });
+
+    it("should match passwords", async () => {
+      const user = new User();
+      user.firstName= "aymeric";
+      user.lastName= "maillot";
+      user.email= "aymeric@gmail.com";
+      const password1 = "password123456";
+      const password2 = "password12";
+      await user.setPassword(password1, password1)
+
+      const userPromise = await user.isPasswordValid(password2);
+      await chai
+        .expect(userPromise)
+        .to.equal(false);
+    });
+
   });
 });
