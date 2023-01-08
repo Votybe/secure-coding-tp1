@@ -1,13 +1,13 @@
 import { IsEmail, IsNotEmpty, ValidationError } from "class-validator";
-import { Entity, PrimaryGeneratedColumn, Column, Index, Repository, QueryFailedError } from "typeorm";
+import { Entity, PrimaryGeneratedColumn, Column, Index } from "typeorm";
 import { UniqueInColumn } from '../custom-decorators/unique.in.column';
 
 const bcrypt = require('bcrypt');
 
 @Entity()
 export class User {
-  @PrimaryGeneratedColumn()
-  "id": number;
+  @PrimaryGeneratedColumn("uuid")
+  "id": string;
 
   @Column()
   "firstName": string;
@@ -34,11 +34,17 @@ export class User {
 
   async setPassword(password: string, passwordConfirmation: string) {
     if(this.calculateEntropy(password) < 80) {
-      throw new Error("Password is not strong enough");
+      const err = new ValidationError();
+      err.property = "passwordHash";
+      err.contexts =  ["Password is not strong enough"];
+      throw err;
     }
-      
-    if(password != passwordConfirmation)
-      throw new Error("Both passwords don't match")
+    if(password != passwordConfirmation){
+      const err = new ValidationError();
+      err.property = "passwordHash"
+      err.contexts = ["Both passwords don't match"]
+      throw err;
+    }
     await bcrypt.genSalt().then(async (salt: any) => {
       await bcrypt.hash(password, salt).then((hash: string) => {
           this.passwordHash = hash;
