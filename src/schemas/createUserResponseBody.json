@@ -1,0 +1,12 @@
+{
+    "$schema": "http://json-schema.org/draft-04/schema#",
+    "title": "CreateUserResponseBody",
+    "type" : "object",
+    "required" : ["firstname", "lastname", "email", "id"],
+    "properties" : {
+        "id": { "type": "string" },
+        "email": { "type": "string" },
+        "firstname": { "type": "string" },
+        "lastname": { "type": "string" }
+    }
+}
