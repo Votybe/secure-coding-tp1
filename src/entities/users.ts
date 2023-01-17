@@ -16,10 +16,10 @@ export class User {
   "lastName": string;
 
   @Column({ nullable: false, unique: true , transformer: {
-    to(value) {
+    to(value: string) {
       return value.toLocaleLowerCase();
     },
-    from(value) {
+    from(value: any) {
       return value;
     }
   }})

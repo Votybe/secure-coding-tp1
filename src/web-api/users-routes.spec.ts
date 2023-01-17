@@ -4,26 +4,48 @@ import { QueryFailedError } from "typeorm";
 import { FromSchema } from 'json-schema-to-ts';
 import { createUserRequestBodyObject } from '../schemas/createUserRequestBody';
 import * as chai from "chai";
+import { AppDataSource } from '../lib/typeorm';
+import { User } from '../entities/users';
 
 describe('/web-api/users', function () {
+  before(async function () {
+    // Initialise the datasource (database connection)
+    await AppDataSource.initialize()
+      .then(() => {
+        console.log("database initialized");
+      })
+      .catch((error: any) => console.log(error));
+  });
+
+  beforeEach(async function () {
+    const entities = AppDataSource.entityMetadatas;
+    // iterate on all entities then get the name of all entities and delete it
+    console.log()
+    for (const entity of entities) {
+      const repository = AppDataSource.getRepository(entity.name);
+      await repository.clear();
+    }
+  });
+
   describe('POST #create', function () {
     it('should register the user', async function () {
       console.log("test api")
-      const body: FromSchema<typeof createUserRequestBodyObject> = {
-        firstName: "Aymeric",
-        lastName: "Maillot",
-        email: "aymeric@gmail.com",
-        passwordHash : "Password123456",
-        passwordConfirmation : "Password123456"
-      }
-      const response = await server.inject({ url: `/web-api/users`, method: 'POST', payload: { body } })
-      console.log("response : ", response)
-      // await chai
-      // .expect(response)
-      // .to.eventually.be.rejectedWith(
-      //     QueryFailedError,
-      //     ''
-      // );
+      const response = await server.inject(
+        { 
+          url: `/web-api/users`, 
+          method: 'POST', 
+          payload: {
+            firstName: "Aymeric",
+            lastName: "Maillot",
+            email: "aymeric@gmail.com",
+            password : "Password123456",
+            passwordConfirmation : "Password123456"
+          }
+        }
+      )
+      await chai
+      .expect(response.statusCode)
+      .to.equal(200);
     })
   })
 })

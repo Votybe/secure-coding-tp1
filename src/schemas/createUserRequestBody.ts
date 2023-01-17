@@ -1,15 +1,16 @@
 import { JSONSchema } from 'json-schema-to-ts';
 
 export const createUserRequestBodyObject : JSONSchema = {
-  $schema: "http://json-schema.org/draft-04/schema#",
+  $schema: "http://json-schema.org/draft-07/schema#",
   title: "CreateUserRequestBody",
   type : "object",
-  required : ["firstname", "lastname", "email", "password", "passwordConfirmation"],
+  required : ["firstName", "lastName", "email", "password", "passwordConfirmation"],
   properties : {
-    firstname: { "type": "string" },
-    lastname: { "type": "string" },
+    firstName: { "type": "string" },
+    lastName: { "type": "string" },
     email: { "type": "string" },
     password: { "type": "string" },
     passwordConfirmation: { "type": "string" }
-  }
+  },
+  additionalProperties : false
 }

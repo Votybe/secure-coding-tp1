@@ -38,6 +38,9 @@ describe("User", function () {
       user.email= faker.internet.email();
       user.passwordHash=  "password123456";
       await repoUser.save(user);
+      await chai
+        .expect((repoUser.findBy({ email: user.email })) !== undefined || null)
+        .to.equal(true);
     });
 
     it("should raise error if email is missing", async () => {

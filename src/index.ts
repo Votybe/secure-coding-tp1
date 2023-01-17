@@ -5,7 +5,7 @@ import server from "./lib/fastify"
 
 async function run() {
   await AppDataSource.initialize();
-  await server.listen({ port: 8080 }, (err, address) => {
+  server.listen({ port: 8080, host: "localhost"}, (err, address) => {
     if (err) {
       console.log(err);
       process.exit(1)
