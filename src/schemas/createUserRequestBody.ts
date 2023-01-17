@@ -1,6 +1,4 @@
-import { JSONSchema } from 'json-schema-to-ts';
-
-export const createUserRequestBodyObject : JSONSchema = {
+export const createUserRequestBodyObject = {
   $schema: "http://json-schema.org/draft-07/schema#",
   title: "CreateUserRequestBody",
   type : "object",
@@ -13,4 +11,4 @@ export const createUserRequestBodyObject : JSONSchema = {
     passwordConfirmation: { "type": "string" }
   },
   additionalProperties : false
-}
+}as const;

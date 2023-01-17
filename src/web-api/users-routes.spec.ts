@@ -1,11 +1,7 @@
 // src/specs/routes/web-api/users-routes.spec.ts
 import server from '../lib/fastify'
-import { QueryFailedError } from "typeorm";
-import { FromSchema } from 'json-schema-to-ts';
-import { createUserRequestBodyObject } from '../schemas/createUserRequestBody';
 import * as chai from "chai";
 import { AppDataSource } from '../lib/typeorm';
-import { User } from '../entities/users';
 
 describe('/web-api/users', function () {
   before(async function () {

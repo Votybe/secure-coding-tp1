@@ -1,9 +1,8 @@
-import server from '../lib/fastify'
 import { createUserRequestBodyObject } from "../schemas/createUserRequestBody";
 import { AppDataSource } from "../lib/typeorm";
 import { User } from '../entities/users';
 import { FromSchema } from 'json-schema-to-ts';
-import fastify, { FastifyBaseLogger, FastifyInstance } from "fastify";
+import { FastifyBaseLogger, FastifyInstance } from "fastify";
 import { Server, IncomingMessage, ServerResponse } from "http";
 import { FromSchemaDefaultOptions } from "json-schema-to-ts";
 import { JsonSchemaToTsProvider } from '@fastify/type-provider-json-schema-to-ts';
