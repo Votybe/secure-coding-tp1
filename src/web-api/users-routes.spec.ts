@@ -25,7 +25,6 @@ describe('/web-api/users', function () {
 
   describe('POST #create', function () {
     it('should register the user', async function () {
-      console.log("test api")
       const response = await server.inject(
         { 
           url: `/web-api/users`, 
@@ -39,6 +38,7 @@ describe('/web-api/users', function () {
           }
         }
       )
+      console.log("test")
       await chai
       .expect(response.statusCode)
       .to.equal(200);
