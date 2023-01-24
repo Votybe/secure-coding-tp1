@@ -1,11 +1,6 @@
 import { JsonSchemaToTsProvider } from "@fastify/type-provider-json-schema-to-ts";
 import routes from "../routes/users-routes"
-import fastify, { FastifyReply, FastifyRequest, RouteOptions } from 'fastify'
-import Ajv, {JSONSchemaType} from "ajv"
-import { createUserResponseBodyObject } from "../schemas/createUserResponseBody";
-import { createUserRequestBodyObject } from "../schemas/createUserRequestBody";
-import { createSessionRequestBodyObject } from "../schemas/createSessionRequestBody";
-import { ValidationError } from "class-validator";
+import fastify, { RouteOptions } from 'fastify';
 
 const server = fastify({
         logger: true,

@@ -1,5 +1,5 @@
 // src/specs/fixtures/users-fixtures.ts
-import { User } from '../../entities/users.js'
+import { User } from '../../entities/users'
 import { faker } from '@faker-js/faker'
 import { AppDataSource } from '../../lib/typeorm.js'
 
@@ -13,10 +13,11 @@ export function buildUserFixture(opts: UserFixtureOptions = {}) {
 
   // that hash matches password 'changethat', hardcoded so we save CPU hasing time
   user.passwordHash = '$2a$12$dm2t30Y07Mt9TklkLOuy.efFIJ69WTW3f7NmwH8uioX9R6NHMQSXO'
-
+  console.log("user", user)
   return user
 }
 
-export function createUserFixture(opts: UserFixtureOptions = {}) {
-  return AppDataSource.getRepository(User).save(buildUserFixture(opts))
+export async function createUserFixture(opts: UserFixtureOptions = {}) {
+  console.log("1")
+  return await AppDataSource.getRepository(User).save(buildUserFixture(opts))
 }

@@ -1,6 +1,5 @@
 import { IsEmail, IsNotEmpty, ValidationError } from "class-validator";
 import { Entity, PrimaryGeneratedColumn, Column, Index } from "typeorm";
-import { UniqueInColumn } from '../custom-decorators/unique.in.column';
 
 const bcrypt = require('bcrypt');
 

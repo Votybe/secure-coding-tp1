@@ -1,9 +1,11 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn, RelationId } from 'typeorm'
+import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, RelationId } from 'typeorm'
 import { User } from './users'
+
+const crypto = require('crypto');
 
 @Entity()
 export class Session {
-  @PrimaryColumn()
+  @PrimaryGeneratedColumn("uuid")
   "id": string
 
   @ManyToOne(() => User, { eager: true, cascade: ['insert'], nullable: false })
@@ -19,11 +21,16 @@ export class Session {
   "token": string;
 
   @CreateDateColumn()
-  "createdAt": string;
+  "createdAt": Date;
 
   @Column()
-  "expiresAt": string;
+  "expiresAt": Date;
 
-  @Column()
-  "revokedAt": string;
+  @Column({ nullable: true})
+  "revokedAt": Date;
+
+  async initialisation() {
+    this.token = crypto.randomBytes(32).toString('base64');
+    this.expiresAt = new Date((new Date()).getTime() + 30*60000);
+  }
 }

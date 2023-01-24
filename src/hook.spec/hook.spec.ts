@@ -3,7 +3,6 @@ import * as chaiAsPromised from "chai-as-promised";
 import fastify, { FastifyInstance } from "fastify";
 import { assertsResponseSchemaPresenceHook } from "../lib/fastify";
 import { JsonSchemaToTsProvider } from "@fastify/type-provider-json-schema-to-ts";
-import server from '../lib/fastify'
 
 chai.use(chaiAsPromised);
 const expect = chai.expect;

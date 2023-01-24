@@ -9,9 +9,10 @@ type SessionFixtureOptions = { user?: User }
 export function buildSessionFixture(opts: SessionFixtureOptions = {}) {
   const session = new Session()
   session.user = opts.user ?? buildUserFixture()
+  session.initialisation();
   return session
 }
 
 export async function createSessionFixture(opts: SessionFixtureOptions = {}) {
-  return AppDataSource.getRepository(Session).save(buildSessionFixture(opts))
+  return await AppDataSource.getRepository(Session).save(buildSessionFixture(opts))
 }
