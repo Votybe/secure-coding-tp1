@@ -8,7 +8,8 @@
     "watch": "rm -fr dist && tsc -watch",
     "start": "node --async-stack-traces dist/index.js",
     "lint": "eslint --fix src",
-    "test": "NODE_ENV=test mocha --recursive dist/specs --exit --async-stack-traces"
+    "test": "SET NODE_ENV=test&&mocha --recursive dist/specs/web-api/session-routes.spec.js --exit --async-stack-traces",
+    "compile-schemas": "json2ts -i src/schemas -o types"
   },
   "author": "Thomas VEILLARD",
   "license": "ISC",
@@ -30,10 +31,11 @@
   "dependencies": {
     "@fastify/cookie": "^8.3.0",
     "@fastify/type-provider-json-schema-to-ts": "^2.2.2",
+    "ajv": "^8.12.0",
     "bcrypt": "^5.1.0",
     "class-validator": "^0.14.0",
     "dotenv": "^16.0.3",
-    "fastify": "^4.11.0",
+    "fastify": "^4.12.0",
     "json-schema-to-ts": "^2.6.2",
     "pg": "^8.8.0",
     "reflect-metadata": "^0.1.13",
