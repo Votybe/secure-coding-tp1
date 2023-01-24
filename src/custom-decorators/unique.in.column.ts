@@ -1,6 +1,6 @@
 import { registerDecorator, ValidationOptions, ValidationArguments, ValidatorConstraint, ValidatorConstraintInterface } from "class-validator";
 import { AppDataSource } from "../lib/typeorm";
-import { User } from "../entities/users";
+import { User } from "../entities/user";
 
 @ValidatorConstraint({ async: true })
 export class UniqueInColumnConstraint implements ValidatorConstraintInterface {

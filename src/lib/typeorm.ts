@@ -1,6 +1,6 @@
 import { DataSource } from "typeorm";
 import * as dotenv from "dotenv";
-import { User } from "../entities/users";
+import { User } from "../entities/user";
 import { UserSubscriber } from "../subscribers/user.subscriber";
 import { Session } from "../entities/session";
 

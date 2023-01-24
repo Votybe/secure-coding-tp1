@@ -3,7 +3,7 @@ import {
   EventSubscriber,
   InsertEvent,
 } from "typeorm";
-import { User } from "../entities/users";
+import { User } from "../entities/user";
 import { validate } from "class-validator";
 
 @EventSubscriber()

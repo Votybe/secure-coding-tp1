@@ -1,5 +1,6 @@
 import { JsonSchemaToTsProvider } from "@fastify/type-provider-json-schema-to-ts";
-import routes from "../routes/users-routes"
+import routesUser from "../web-api/routes/users-routes"
+import routesSession from "../web-api/routes/session-routes"
 import fastify, { RouteOptions } from 'fastify';
 
 const server = fastify({
@@ -13,7 +14,6 @@ const server = fastify({
     .withTypeProvider<JsonSchemaToTsProvider>()
     //.addHook('onRoute', assertsResponseSchemaPresenceHook)
     .setErrorHandler((error, request, reply) => {
-      console.log("statu", reply.statusCode)
       if (reply.statusCode < 500) {
         reply.log.info({res: reply, err: error}, error?.message);
         void reply.send(error);
@@ -23,7 +23,8 @@ const server = fastify({
       }
     })
 
-routes(server);
+routesUser(server);
+routesSession(server);
 
 export default server;
 

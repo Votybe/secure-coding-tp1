@@ -1,7 +1,7 @@
 import * as chai from "chai";
 import * as chaiAsPromised from "chai-as-promised";
 import fastify, { FastifyInstance } from "fastify";
-import { assertsResponseSchemaPresenceHook } from "../lib/fastify";
+import { assertsResponseSchemaPresenceHook } from "../../lib/fastify";
 import { JsonSchemaToTsProvider } from "@fastify/type-provider-json-schema-to-ts";
 
 chai.use(chaiAsPromised);

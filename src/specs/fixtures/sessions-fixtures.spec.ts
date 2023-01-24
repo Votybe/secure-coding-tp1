@@ -1,7 +1,7 @@
 // src/specs/fixtures/sessions-fixtures.ts
 import { Session } from '../../entities/session.js'
 import { buildUserFixture } from './user-fixtures.spec'
-import { User } from '../../entities/users'
+import { User } from '../../entities/user'
 import { AppDataSource } from '../../lib/typeorm.js'
 
 type SessionFixtureOptions = { user?: User }

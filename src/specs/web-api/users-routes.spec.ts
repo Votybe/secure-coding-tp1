@@ -1,7 +1,7 @@
 // src/specs/routes/web-api/users-routes.spec.ts
-import server from '../lib/fastify'
+import server from '../../lib/fastify'
 import * as chai from "chai";
-import { AppDataSource } from '../lib/typeorm';
+import { AppDataSource } from '../../lib/typeorm';
 
 describe('/web-api/users', function () {
   before(async function () {
