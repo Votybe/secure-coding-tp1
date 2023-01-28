@@ -31,6 +31,31 @@ function routesUser (server: FastifyInstance<Server, IncomingMessage, ServerResp
             res.send(repoSave);
         }
     )
+
+    server.get(
+        "/web-api/users/me",
+        { 
+            schema: { 
+                response: {200 : createUserResponseBodyObject},
+                params: {},
+                querystring: {}
+            }
+        },
+        async (req, res) => {
+            console.log("user me : ", req.user);
+            const user = req.user;
+            if(user != undefined ) {
+                console.log("user response :", user);
+                res.send({
+                    id : user.id,
+                    email : user.email,
+                    firstname : user.firstName,
+                    lastname : user.lastName,
+    
+                });
+            }
+        }
+    )
 }
 
 export default routesUser;

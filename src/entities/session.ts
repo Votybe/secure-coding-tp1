@@ -1,4 +1,4 @@
-import { Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, RelationId } from 'typeorm'
+import { BeforeInsert, Column, CreateDateColumn, Entity, ManyToOne, PrimaryColumn, PrimaryGeneratedColumn, RelationId } from 'typeorm'
 import { User } from './user'
 
 const crypto = require('crypto');
@@ -29,6 +29,7 @@ export class Session {
   @Column({ nullable: true})
   "revokedAt": Date;
 
+  @BeforeInsert()
   initialisation() {
     this.token = crypto.randomBytes(32).toString('base64');
     this.expiresAt = new Date((new Date()).getTime() + 30*60000);

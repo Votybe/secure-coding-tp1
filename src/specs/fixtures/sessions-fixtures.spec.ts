@@ -9,7 +9,6 @@ type SessionFixtureOptions = { user?: User }
 export function buildSessionFixture(opts: SessionFixtureOptions = {}) {
   const session = new Session()
   session.user = opts.user ?? buildUserFixture()
-  session.initialisation();
   return session
 }
 

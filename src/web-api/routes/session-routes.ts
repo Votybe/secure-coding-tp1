@@ -8,6 +8,7 @@ import { JsonSchemaToTsProvider } from '@fastify/type-provider-json-schema-to-ts
 import { createUserResponseBodyObject } from "../../schemas/createUserResponseBody";
 import { createSessionRequestBodyObject } from "../../schemas/createSessionRequestBody";
 import { Session } from "../../entities/session";
+import { saveSession } from "../../lib/session";
 
 function routesSession (server: FastifyInstance<Server, IncomingMessage, ServerResponse, FastifyBaseLogger, JsonSchemaToTsProvider<FromSchemaDefaultOptions>>) {
     server.post<{Body: FromSchema<typeof createSessionRequestBodyObject> }>(
@@ -21,18 +22,14 @@ function routesSession (server: FastifyInstance<Server, IncomingMessage, ServerR
             }
         },
         async (req, res) => {
-            const body : any = req.body;
-            const user = await AppDataSource.getRepository(User).findOne({
+            const body = req.body;
+            const user = await AppDataSource.getRepository(User).findOneOrFail({
                 where: { email: body.email , passwordHash: body.password}
             });
             if(user) {
-                const session = new Session();
-                session.user = user;
-                session.initialisation();
-                await AppDataSource.getRepository(Session).save(session);
-                return {}
+                await saveSession(res, user);
             }
-            return new Error("Bad email or password");
+            res.code(404).send(new Error("Bad email or password"));
         }
     )
 }
