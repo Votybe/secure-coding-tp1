@@ -1,0 +1,10 @@
+POSTGRES_USER=tutorial
+POSTGRES_DB=iam
+POSTGRES_PASSWORD=privatepassword
+HOST_POSTGRES=127.0.0.1
+
+
+COOKIE_NAME = session
+COOKIE_SECRET = my-secret
+COOKIE_SIGNED = true
+COOKIE_HTTP_ONLY = true

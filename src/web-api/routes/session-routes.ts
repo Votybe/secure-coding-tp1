@@ -32,6 +32,29 @@ function routesSession (server: FastifyInstance<Server, IncomingMessage, ServerR
             res.code(404).send(new Error("Bad email or password"));
         }
     )
+
+    server.delete<{}>(
+        "/web-api/sessions/current",
+        { 
+            schema: { 
+                response: {200 : {}},
+                params: {},
+                querystring: {}
+            }
+        },
+        async (req, res) => {
+            // const body = req.body;
+            // const cookie = req.body.cookies.cookieName;
+            // const unsigned = cookie ? request.unsignCookie(cookie) : null
+
+            // const session = await AppDataSource.getRepository(Session).findOneBy({token: unsigned.value });
+            // if (session){
+            //     session.revokedAt = new Date()
+            // } else {
+            //     res.code(404).send(new Error("Bad Session token"));
+            // }
+        }
+    )
 }
 
 export default routesSession;

@@ -7,6 +7,7 @@ import { ValidationError } from "ajv";
 import cookie, { FastifyCookieOptions } from '@fastify/cookie'
 import { COOKIE_SECRET } from './dotenv'
 import { loadSession } from '../lib/session'
+
 const server = fastify({
         logger: true,
         ajv: {
@@ -44,7 +45,6 @@ export default server;
 export function assertsResponseSchemaPresenceHook(routeOptions: RouteOptions) {
     if (!routeOptions.schema) {
       throw new Error("No schema");
-      //throw new BadRequest("rerre")
     } else {
       if (!routeOptions.schema.body)
         throw new Error("No body in schema");

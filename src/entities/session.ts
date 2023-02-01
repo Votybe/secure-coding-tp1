@@ -17,6 +17,7 @@ export class Session {
   @Column({
     type: "varchar",
     length: 384,
+    unique: true,
     })
   "token": string;
 

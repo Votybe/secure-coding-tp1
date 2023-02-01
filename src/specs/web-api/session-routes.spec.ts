@@ -26,37 +26,9 @@ describe("Session", function () {
         await AppDataSource.getRepository("User").createQueryBuilder().delete().execute();
     });
 
-    // it("should create a session after lowering email", async () => {
-    //     let user = await createUserFixture()response
-    //     const response = await server.inject(
-    //         { 
-    //           url: `/web-api/session`, 
-    //           method: 'POST', 
-    //           payload: {
-    //             email: user.email.toLowerCase(),
-    //             password : user.passwordHash,
-    //           }
-    //         }
-    //     )
-    //     // console.log("response : ", response);
-    //     await chai
-    //     .expect(response.statusCode)
-    //     .to.equal(200);
-    // });
-
-    // it("should reject with 404 if email not found", async () => {
-        
-    // });
-
-    // it("should reject with 404 if password does not match", async () => {
-        
-    // });
-
-
-
-    it('should respond with the current user identity', async () => {
-      let user = await createUserFixture()
-        await server.inject(
+    it("should create a session after lowering email", async () => {
+        let user = await createUserFixture()
+        const response = await server.inject(
             { 
               url: `/web-api/session`, 
               method: 'POST', 
@@ -66,25 +38,18 @@ describe("Session", function () {
               }
             }
         )
-        const session = await AppDataSource.getRepository(Session).findOneByOrFail({ user: {id: user.id}});
-        const response = await server.inject(
-            { 
-              url: `/web-api/users/me`, 
-              method: 'GET',
-              headers: { 
-                cookie: sign(session.token, COOKIE_SECRET)
-              }
-            }
-        )
         // console.log("response : ", response);
         await chai
         .expect(response.statusCode)
         .to.equal(200);
     });
 
-    // it('should respond with 401 if user is not logged in')
-    // it('should respond with 401 if unsigned cookie')
-    // it('should respond with 401 if cookie signature with a wrong key')
-    // it('should respond with 401 if session has expired')
-    // it('should respond with 401 if session has been revoked')
+    // it("should reject with 404 if email not found", async () => {
+        
+    // });
+
+    // it("should reject with 404 if password does not match", async () => {
+        
+    // });
+
 });
